@@ -17,36 +17,36 @@ RSpec.describe "StaticPages", type: :request do
 
   describe "GET /help" do
     it "returns http success" do
-      get static_pages_help_path
+      get help_path
       expect(response).to have_http_status(:success)
     end
 
     it "titleにHelp | Ruby on Rails Tutorial Sample Appが表示される" do
-      get static_pages_help_path
+      get help_path
       expect(response.body).to include "Help | #{base_title}"
     end
   end
 
   describe "GET /about" do
     it "returns http success" do
-      get static_pages_about_path
+      get about_path
       expect(response).to have_http_status(:success)
     end
 
     it "titleにAbout | Ruby on Rails Tutorial Sample Appが表示される" do
-      get static_pages_about_path
+      get about_path
       expect(response.body).to include "About | #{base_title}"
     end
   end
 
   describe "GET /contact" do
     it "returns http success" do
-      get static_pages_contact_path
+      get contact_path
       expect(response).to have_http_status(:success)
     end
 
     it "titleにContact | Ruby on Rails Tutorial Sample Appが表示される" do
-      get static_pages_contact_path
+      get contact_path
       expect(response.body).to include "Contact | #{base_title}"
     end
   end
