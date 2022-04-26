@@ -26,4 +26,20 @@ RSpec.describe User, type: :model do
     user.name = "#{'a' * 244}@example.com"
     expect(user).to_not be_valid
   end
+
+  it 'アドレスは正常な形式の場合入力できる' do
+    valide_addresses = %w[user@exmple.com USER@foo.COM A_US-ER@foo.bar.org first.last@foo.jp alice+bob@baz.cn]
+    valide_addresses.each do | address |
+      user.email = address
+      expect(user).to be_valid
+    end
+  end
+
+  it 'アドレスは異常な形式の場合入力できない' do
+    valide_addresses = %w[user@example,com user_at_foo.org user.name@example. foo@bar_baz.com foo@bar+baz.com]
+    valide_addresses.each do | address |
+      user.email = address
+      expect(user).to_not be_valid
+    end
+  end
 end
