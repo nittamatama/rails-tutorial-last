@@ -16,4 +16,14 @@ RSpec.describe User, type: :model do
     user.email = '     '
     expect(user).to_not be_valid
   end
+
+  it '名前は50文字以上では入力できない' do
+    user.name = 'a' * 51
+    expect(user).to_not be_valid
+  end
+
+  it 'アドレスは255文字以上では入力できない' do
+    user.name = "#{'a' * 244}@example.com"
+    expect(user).to_not be_valid
+  end
 end
