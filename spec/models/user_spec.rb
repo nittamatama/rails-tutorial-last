@@ -36,10 +36,16 @@ RSpec.describe User, type: :model do
   end
 
   it 'アドレスは異常な形式の場合入力できない' do
-    valide_addresses = %w[user@example,com user_at_foo.org user.name@example. foo@bar_baz.com foo@bar+baz.com]
+    valide_addresses = %w[user@example,com user_at_foo.org user.name@example. foo@bar_baz.com foo@bar+baz.com foo@bar..com]
     valide_addresses.each do | address |
       user.email = address
       expect(user).to_not be_valid
     end
+  end
+
+  it 'メールアドレスは同じものを複数登録はできない' do
+    duplicate_user = user.dup
+    duplicate_user.save
+    expect(user.email).to_not be_valid
   end
 end
