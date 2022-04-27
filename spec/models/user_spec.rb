@@ -45,7 +45,8 @@ RSpec.describe User, type: :model do
 
   it 'メールアドレスは同じものを複数登録はできない' do
     duplicate_user = user.dup
-    duplicate_user.save
-    expect(user.email).to_not be_valid
+    duplicate_user.email = user.email.upcase
+    user.save
+    expect(duplicate_user).to_not be_valid
   end
 end
