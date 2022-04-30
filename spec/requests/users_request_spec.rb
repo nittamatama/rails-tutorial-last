@@ -14,4 +14,15 @@ RSpec.describe "Users", type: :request do
     end
   end
 
+  describe "POST/signup" do
+    it "無効な値の場合、ユーザー登録はされない" do
+      expect {
+        post users_path, params: { user: { name: '',
+                                            email: 'user@invlid',
+                                            password: 'foo',
+                                            password_confirmation: 'bar'}}
+        }.to_not change(User, :count)
+    end
+  end
+
 end
