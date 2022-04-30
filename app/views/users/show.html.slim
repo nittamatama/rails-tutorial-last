@@ -1,6 +1,7 @@
-= @user.name
-| ,
-= @user.email
-= @user.created_at
-= @user.updated_at
-= Time.now
+= provide(:title, @user.name)
+.row
+  aside.col-md-4
+    section.user_info
+      h1
+        = gravatar_for @user
+        = @user.name

@@ -10,8 +10,6 @@ services:
     ports:
       - 4306:3306
   web:
-    stdin_open: true
-    tty: true
     build:
       context: .
       dockerfile: Dockerfile
@@ -26,5 +24,7 @@ services:
       - "3000:3000"
     depends_on:
       - db
+    stdin_open: true
+    tty: true
 volumes:
   mysql-data:
