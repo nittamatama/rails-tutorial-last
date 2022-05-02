@@ -26,19 +26,13 @@ RSpec.describe "Users", type: :request do
 
     context "有効な値の場合" do
       let(:user_params) { { user: { name: 'Example User',
-                            email: 'user@example.com',
-                            password: 'password',
-                            password_confirmation: 'password' } } }
+        email: 'user@example.com',
+        password: 'password',
+        password_confirmation: 'password' } } }
 
-      it "ユーザー登録がされる" do
-        expect {
-          post users_path, params: user_params
-        }.to change(User, :count).by 1
-      end
-
-      it "flashが表示される" do
+        it "ログイン状態になる" do
         post users_path, params: user_params
-        expect(flash).to be_any
+        expect(logged_in?).to be_truthy
       end
     end
   end
