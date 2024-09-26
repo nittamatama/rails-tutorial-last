@@ -35,7 +35,7 @@ jobs:
         run: |
           set -x
 
-          export CIRCLE_BRANCH=$(echo $GITHUB_REF | sed -e 's!refs/heads/!!g')
+          export CIRCLE_BRANCH=test_branch
           echo $GITHUB_REF
           echo $CIRCLE_BRANCH
           echo $GITHUB_REPOSITORY
