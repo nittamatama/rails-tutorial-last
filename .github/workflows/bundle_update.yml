@@ -1,0 +1,54 @@
+name: bundle-update-pr
+
+on:
+  # schedule:
+  #   - cron: "00 22 * * 3" # JST 07:00 (Thu)
+  workflow_dispatch:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get Ruby Version
+        id: ruby
+        run: echo "ruby-version=$(cat .ruby-version)" >> $GITHUB_OUTPUT
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ steps.ruby.outputs.ruby-version }}
+
+      - name: Install dependencies
+        run: |
+          set -x
+          gem install -N bundler circleci-bundle-update-pr
+
+      - name: Set timezone to Asia/Tokyo
+        run: |
+          set -x
+          cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
+
+      - name: run circleci-bundle-update-pr
+        run: |
+          set -x
+
+          export CIRCLE_BRANCH=$(echo $GITHUB_REF | sed -e 's!refs/heads/!!g')
+          echo $GITHUB_REF
+          echo $CIRCLE_BRANCH
+          echo $GITHUB_REPOSITORY
+          export CIRCLE_PROJECT_USERNAME=$(echo $GITHUB_REPOSITORY | cut -d "/" -f 1)
+          export CIRCLE_PROJECT_REPONAME=$(echo $GITHUB_REPOSITORY | cut -d "/" -f 2)
+
+          echo $CIRCLE_PROJECT_USERNAME
+          echo $CIRCLE_PROJECT_REPONAME
+
+          git checkout -b $CIRCLE_BRANCH
+
+          circleci-bundle-update-pr "${GIT_USER_NAME}" "${GIT_USER_EMAIL}"
+        env:
+          GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GIT_USER_NAME:       "nittamatama"
+          GIT_USER_EMAIL:      "blackmnshin@gmail.com"
