@@ -12,14 +12,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # - name: Get Ruby Version
-      #   id: ruby
-      #   run: echo "ruby-version=$(cat .ruby-version)" >> $GITHUB_OUTPUT
+      - name: Get Ruby Version
+        id: ruby
+        run: echo "ruby-version=$(cat .ruby-version)" >> $GITHUB_OUTPUT
 
       - name: Set up Ruby
-        uses: actions/setup-ruby@v1
+        uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.0'
+          ruby-version: ${{ steps.ruby.outputs.ruby-version }}
 
       - name: Install dependencies
         run: |
