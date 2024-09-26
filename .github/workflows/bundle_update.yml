@@ -16,6 +16,8 @@ jobs:
         id: ruby
         run: echo "ruby-version=$(cat .ruby-version)" >> $GITHUB_OUTPUT
 
+      - uses: actions/checkout@v4
+
       - name: Set up Ruby
         uses: actions/setup-ruby@v1
         with:
